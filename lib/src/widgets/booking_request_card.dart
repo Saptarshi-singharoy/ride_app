@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ride_app/src/models/booking.model.dart';
 
 class BookingRequestCard extends StatefulWidget {
-  const BookingRequestCard({super.key, required this.booking});
+  const BookingRequestCard(
+      {super.key, required this.booking, required this.deleteFunc});
 
   final BookingModel booking;
+  final Function() deleteFunc;
 
   @override
   State<BookingRequestCard> createState() => _BookingRequestCardState();

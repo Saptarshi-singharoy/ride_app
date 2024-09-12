@@ -18,7 +18,7 @@ class BottomTab extends StatefulWidget {
 class _BottomTabState extends State<BottomTab> {
   int _activePageIndex = 0;
   bool flag = true;
-  bool behalfMode = true;
+  bool behalfMode = false;
 
   final List<String> _pageIdentifiers = [];
 
@@ -86,6 +86,7 @@ class _BottomTabState extends State<BottomTab> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red.withOpacity(0.4),
         actions: [
           Expanded(
             child: Container(
@@ -118,12 +119,18 @@ class _BottomTabState extends State<BottomTab> {
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         selectedFontSize: 15,
         currentIndex: _activePageIndex,
         onTap: _changePageIndex,
-        // unselectedItemColor: Colors.white60,
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        unselectedLabelStyle: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        selectedIconTheme: IconThemeData(size: 30),
+        unselectedItemColor:
+            Theme.of(context).colorScheme.onSecondary.withOpacity(0.7),
+        selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Colors.red,
         items: [
           const BottomNavigationBarItem(
               icon: Icon(Icons.directions_car), label: 'Bookings'),
@@ -134,7 +141,9 @@ class _BottomTabState extends State<BottomTab> {
                 icon: Icon(Icons.car_rental), label: 'Requests'),
           if (flag)
             const BottomNavigationBarItem(
-                icon: Icon(Icons.drive_eta), label: 'On behalf'),
+                icon: Icon(Icons.drive_eta),
+                label: 'On behalf',
+                backgroundColor: Colors.amber),
         ],
       ),
     );

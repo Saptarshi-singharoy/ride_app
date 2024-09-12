@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ride_app/src/models/booking.model.dart';
 
@@ -37,12 +39,6 @@ class _NewCabScreenState extends State<NewCabScreen> {
     setState(() {
       _selectedDate = pickedDate;
     });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    print(widget.behalfMode);
   }
 
   @override
@@ -227,33 +223,37 @@ class _NewCabScreenState extends State<NewCabScreen> {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      children: [
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer),
-                            onPressed: () {
-                              // Navigator.pop(context);
-                            },
-                            child: Text('Cancel')),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer),
-                            onPressed: () {
-                              // _formGlobalKey.currentState?.save();
-                              // if (_formGlobalKey.currentState!.validate())
-                              //   Navigator.pop(context);
-                            },
-                            child: Text('Book')),
-                      ],
-                    ),
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primaryContainer),
+                        onPressed: () {
+                          // _formGlobalKey.currentState?.save();
+                          if (_formGlobalKey.currentState!.validate()) {
+                            final results = {
+                              'from': _fromController.text,
+                              'to': _toController.text,
+                              'purpose': _purposeController.text,
+                              'ex1': _extraFeild1.text,
+                              'ex2': _extraFeild2.text,
+                              'ex3': _extraFeild3.text,
+                              'ex4': _extraFeild4.text,
+                            };
+                            // print(_fromController.text);
+                            // print(_toController.text);
+                            // print(_purposeController.text);
+                            // print(_extraFeild1.text);
+                            // print(_extraFeild2.text);
+                            // print(_extraFeild3.text);
+                            // print(_extraFeild4.text);
+                            print(jsonEncode(results));
+                          }
+                          // print(_formGlobalKey.currentState);
+                          // if (_formGlobalKey.currentState!.validate())
+                          //   Navigator.pop(context);
+                        },
+                        child: Text('Click to book')),
                   )
                 ],
               ),
