@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ride_app/src/screens/approve_request_screen.dart';
-import 'package:ride_app/src/screens/book_list_screen.dart';
-import 'package:ride_app/src/screens/new_cab_screen.dart';
-import 'package:ride_app/src/screens/on_behalf.dart';
+import 'package:ride_app/src/screens/approve_screen/approve_request_screen.dart';
+import 'package:ride_app/src/screens/booking_list/book_list_screen.dart';
+import 'package:ride_app/src/screens/new_booking/new_cab_screen.dart';
+import 'package:ride_app/src/screens/on_behalf/on_behalf.dart';
+import 'package:ride_app/src/screens/profile_details/profile_details_screen.dart';
 import 'package:ride_app/src/widgets/bottomsheet/new_ride.dart';
 
 class BottomTab extends StatefulWidget {
@@ -69,14 +70,12 @@ class _BottomTabState extends State<BottomTab> {
         activePageName = 'Ride Requests';
         break;
       case 'onBehalf':
-        activePage = OnBehalf();
-        activePageName = 'On Behalf';
+        activePage = OnBehalf(behalfMode: behalfMode);
+        activePageName = 'Book on Behalf';
         break;
       case 'newBooking':
-        activePage = NewCabScreen(
-          behalfMode: behalfMode,
-        );
-        activePageName = 'Book a new Cab';
+        activePage = const NewCabScreen();
+        activePageName = 'Request a car';
         break;
       case 'bookList':
       default:
@@ -86,7 +85,8 @@ class _BottomTabState extends State<BottomTab> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red.withOpacity(0.4),
+        automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         actions: [
           Expanded(
             child: Container(
@@ -98,11 +98,16 @@ class _BottomTabState extends State<BottomTab> {
                     activePageName,
                     style: Theme.of(context)
                         .textTheme
-                        .titleLarge!
+                        .headlineMedium!
                         .copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                   InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (ctx) {
+                          return ProfileDetailsScreen(userData: widget.user);
+                        }));
+                      },
                       child: ClipOval(
                           child: Hero(
                         tag: 'img-tag-${widget.user.photoUrl!}',
@@ -118,6 +123,7 @@ class _BottomTabState extends State<BottomTab> {
         ],
       ),
       body: activePage,
+      backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedFontSize: 15,

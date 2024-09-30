@@ -33,7 +33,7 @@ class _BookingRequestCardState extends State<BookingRequestCard> {
                       Icon(Icons.location_on,
                           size: 15, color: colorScheme.primary),
                       Text(
-                        widget.booking.pickup,
+                        widget.booking.reporting,
                         style: textTheme.bodyLarge!.copyWith(
                             color: colorScheme.primary,
                             fontWeight: FontWeight.bold),

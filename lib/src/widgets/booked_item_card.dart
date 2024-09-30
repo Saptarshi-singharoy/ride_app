@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ride_app/src/models/booking.model.dart';
+import 'package:ride_app/src/screens/booking_list/booking_details_screen.dart';
 
 class BookedItemCard extends StatefulWidget {
   const BookedItemCard({super.key, required this.booking});
@@ -19,7 +20,11 @@ class _BookedItemCardState extends State<BookedItemCard> {
     return Card(
       shadowColor: colorScheme.tertiary,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+            return BookingDetailsScreen(booking: widget.booking);
+          }));
+        },
         splashColor: colorScheme.secondary.withOpacity(0.5),
         borderRadius: BorderRadius.circular(16),
         child: Container(
@@ -76,7 +81,7 @@ class _BookedItemCardState extends State<BookedItemCard> {
                         children: [
                           Icon(Icons.location_on, size: 15, color: Colors.red),
                           Text(
-                            widget.booking.pickup,
+                            widget.booking.reporting,
                             style: textTheme.bodyLarge!.copyWith(
                                 color: Colors.red, fontWeight: FontWeight.bold),
                           ),

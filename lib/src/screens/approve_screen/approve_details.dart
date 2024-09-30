@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:ride_app/src/data/dummy_booking_data.dart';
 import 'package:ride_app/src/models/booking.model.dart';
-import 'package:ride_app/src/widgets/booking_request_list_item.dart';
-// import 'package:ride_app/src/widgets/booking_request_card.dart';
 
-class ApproveRequestScreen extends StatefulWidget {
-  const ApproveRequestScreen({super.key});
+class ApproveDetails extends StatefulWidget {
+  final BookingModel booking;
+
+  const ApproveDetails({super.key, required this.booking});
 
   @override
-  State<ApproveRequestScreen> createState() => _ApproveRequestScreenState();
+  State<ApproveDetails> createState() => _ApproveDetailsState();
 }
 
-class _ApproveRequestScreenState extends State<ApproveRequestScreen> {
-  final CheckedList = [];
-
+class _ApproveDetailsState extends State<ApproveDetails> {
   void _showDeleteConformationDialog(BookingModel booking) {
     showDialog(
       context: context,
@@ -67,47 +65,44 @@ class _ApproveRequestScreenState extends State<ApproveRequestScreen> {
     );
   }
 
-  void _delete(booking) {
-    setState(() {
-      dummyBookingData.remove(booking);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    // TextTheme textTheme = Theme.of(context).textTheme;
-    // ColorScheme colorScheme = Theme.of(context).colorScheme;
-    return DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const TabBar(
-              tabs: [
-                Tab(
-                  text: "To Do",
-                ),
-                Tab(
-                  text: "Approve",
-                ),
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Text("data"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: colorScheme.onTertiary),
+                    onPressed: () {
+                      // widget.accept(widget.booking);
+                      _showAcceptConformationDialog(widget.booking);
+                    },
+                    child: const Row(
+                      children: [Icon(Icons.check), Text('Accept')],
+                    )),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: colorScheme.inversePrimary),
+                    onPressed: () {
+                      // widget.delete(widget.booking);
+                      _showDeleteConformationDialog(widget.booking);
+                    },
+                    child: const Row(
+                      children: [Icon(Icons.close), Text('Reject')],
+                    )),
               ],
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              ListView.builder(
-                itemCount: dummyBookingData.length,
-                itemBuilder: (context, index) {
-                  final booking = dummyBookingData[index];
-                  return BookingRequestListItem(
-                      booking: booking,
-                      index: index,
-                      delete: _showDeleteConformationDialog,
-                      accept: _showAcceptConformationDialog);
-                },
-              ),
-              Text("Page 2"),
-            ],
-          ),
-        ));
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
