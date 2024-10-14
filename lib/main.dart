@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ride_app/src/app.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ride_app/presentation/app.dart';
 
 void main() {
-  runApp(const App());
+  runApp(ProviderScope(child: const App()));
 }
